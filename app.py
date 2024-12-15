@@ -102,7 +102,7 @@ def gemini_fallback(user_input):
         print(f"Error communicating with Gemini API: {e}")
         return "Sorry, something went wrong while trying to process your request."
 
-
+# Add your API KEY here
 def get_news(api_key="fc016c0ac52745dd9118efaee5ef1096"):
     url = f"https://newsapi.org/v2/top-headlines?country=us&apiKey={api_key}"
     try:
