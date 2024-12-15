@@ -42,6 +42,20 @@ Pluto.ai is an AI-powered chatbot built using Flask on the backend and a respons
 
 ---
 
+## Demo 🚀
+
+https://github.com/user-attachments/assets/7866d06d-eda9-421f-ba3b-2ff7d44f02cb
+
+### Login Page:
+![Login Page](https://github.com/user-attachments/assets/55986a4a-db5c-446d-b52b-ac6ffb14a0f6)
+
+### Register Page:
+![Register page](https://github.com/user-attachments/assets/c9bd54d4-6464-46de-bb95-5833cbcc18b1)
+
+
+
+
+
 
   
 
