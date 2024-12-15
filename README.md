@@ -52,6 +52,10 @@ https://github.com/user-attachments/assets/7866d06d-eda9-421f-ba3b-2ff7d44f02cb
 ### Register Page:
 ![Register page](https://github.com/user-attachments/assets/c9bd54d4-6464-46de-bb95-5833cbcc18b1)
 
+---
+
+P.S: This project is created for learning purposes. Feel free to explore and suggest any improvements or changes. 😊
+
 
 
 
