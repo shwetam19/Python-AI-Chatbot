@@ -131,7 +131,7 @@ def get_movies(api_key="be01c0d709040362032aa9de9a664881"):
     except Exception as e:
         return f"Error fetching movie data: {str(e)}"
 
-def get_weather(city_name, api_key="9eb7d214877e5e39789c8601fb5ab232"):
+def get_weather(city_name, api_key="<ADD YOUR HERE>"):
     base_url = "http://api.openweathermap.org/data/2.5/weather?"
     complete_url = f"{base_url}q={city_name}&appid={api_key}&units=metric"
     
