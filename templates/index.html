@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pluto.ai</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: #0a122d;
+            /* Deep Space Blue background */
+            color: #fff;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .chat-box {
+            max-width: 800px;
+            margin: 20px auto;
+            background: rgba(30, 40, 50, 0.8);
+            /* Transparent glass-like effect */
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            /* Glassmorphism style */
+            box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.1);
+            /* Soft shadow */
+            padding: 20px;
+            height: 80%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid #4a5c6b;
+        }
+
+        .robot-icon {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            /* Transparent background for message area */
+            border-radius: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-box {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        input[type="text"] {
+            flex-grow: 1;
+            padding: 10px;
+            border-radius: 30px;
+            border: none;
+            background: rgba(176, 196, 222, 0.2);
+            color: #fff;
+            font-size: 16px;
+        }
+
+        button {
+            background: #8b3a3a;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #6b2d2d;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 20px;
+            max-width: 80%;
+            display: flex;
+            align-items: center;
+        }
+
+        .user-message {
+            background: #8b4513;
+            /* Brownish for user messages */
+            align-self: flex-end;
+            margin-left: auto;
+        }
+
+        .bot-message {
+            background: #e8e8e8;
+            /* Light grey for bot messages */
+            align-self: flex-start;
+            color: #333;
+        }
+
+        .message.bot-message {
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            font-family: Arial, sans-serif;
+        }
+
+        .message.bot-message p {
+            margin: 5px 0;
+        }
+
+        .message.bot-message ol {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+
+        .message.bot-message li {
+            margin-bottom: 5px;
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        em {
+            font-style: italic;
+        }
+
+        a {
+            color: blue;
+            text-decoration: underline;
+        }
+
+        .space-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            background: radial-gradient(circle at center, #1a1a2e 0%, #000000 100%);
+        }
+
+        .logout-button {
+            background: #2f4f4f;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .logout-button:hover {
+            background: #203737;
+        }
+
+        .pluto-icon {
+            width: 80px;
+            height: 80px;
+            margin-right: 15px;
+            transform-origin: center;
+            animation: rotate 60s linear infinite;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Space background -->
+    <div class="space-background"></div>
+
+    <!-- Chatbox area with Pluto animation -->
+    <div class="chat-box">
+        <div class="robot-icon">
+            <svg class="pluto-icon" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Main body of Pluto -->
+                <circle cx="100" cy="100" r="90" fill="#C4A484" /> <!-- Beige brown -->
+
+                <!-- Lighter surface features -->
+                <circle cx="70" cy="70" r="30" fill="#E6CCAB" /> <!-- Light beige -->
+                <circle cx="140" cy="120" r="25" fill="#E6CCAB" /> <!-- Light beige -->
+
+                <!-- Heart-shaped feature -->
+                <path d="M110,75 Q125,60 140,75 T170,75 Q185,90 170,105 L140,135 L110,105 Q95,90 110,75 Z"
+                    fill="#8B4513" /> <!-- Rust brown -->
+
+                <!-- Cute face -->
+                <!-- <circle cx="80" cy="90" r="10" fill="#4A3728"/> Dark brown eyes -->
+                <!-- <circle cx="120" cy="90" r="10" fill="#4A3728"/> Dark brown eyes -->
+                <!-- <path d="M85,120 Q100,130 115,120" fill="none" stroke="#4A3728" stroke-width="5" stroke-linecap="round"/> Dark brown smile -->
+
+                <!-- Small craters or spots -->
+                <circle cx="50" cy="150" r="8" fill="#8B4513" /> <!-- Rust brown -->
+                <circle cx="160" cy="60" r="6" fill="683f22" /> <!-- Brown red -->
+                <circle cx="30" cy="100" r="5" fill="#683f22" /> <!-- Brown red -->
+            </svg>
+            <h2 style="color: #b0c4de; font-family:Segoe UI">Pluto.ai</h2>
+        </div>
+        <div class="messages" id="messages"></div>
+        <div class="input-box">
+            <input type="text" id="user_input" placeholder="Type your message...">
+            <button onclick="sendMessage()">Send <i class="fas fa-paper-plane"></i></button>
+            <!-- Added logout button here -->
+            <button class="logout-button" onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <script>
+        // Fetch user's chat history on page load
+        window.onload = function () {
+            loadChatHistory();
+        };
+
+        // Load chat history from the server
+        function loadChatHistory() {
+            fetch('/get_chat_history')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.chats) {
+                        const chatHistoryElement = document.getElementById("chat-history");
+                        chatHistoryElement.innerHTML = "";  // Clear previous history
+
+                        // Populate chat history
+                        data.chats.forEach((chat, index) => {
+                            const chatItem = document.createElement("li");
+                            chatItem.className = "chat-item";
+                            chatItem.textContent = `Chat ${index + 1}`;
+                            chatItem.onclick = function () {
+                                loadChatMessages(chat.user_message, chat.bot_response);
+                            };
+                            chatHistoryElement.appendChild(chatItem);
+                        });
+                    }
+                })
+                .catch(error => console.error('Error fetching chat history:', error));
+        }
+
+        // Load chat messages into the chat window
+        function loadChatMessages(userMessage, botResponse) {
+            const messagesElement = document.getElementById("messages");
+            messagesElement.innerHTML = "";
+
+            // Display user's message
+            const userMessageDiv = document.createElement("div");
+            userMessageDiv.className = "message user-message";
+            userMessageDiv.innerHTML = userMessage;
+            messagesElement.appendChild(userMessageDiv);
+
+            // Display bot's response using handleBotResponse
+            handleBotResponse({ response: botResponse });
+        }
+
+
+        // Send message to the bot
+        function sendMessage() {
+    var user_input = document.getElementById("user_input").value;
+    var messages = document.getElementById("messages");
+
+    // Display user's message
+    var userMessage = document.createElement("div");
+    userMessage.className = "message user-message";
+    userMessage.innerHTML = user_input;
+    messages.appendChild(userMessage);
+
+    // Clear the input field
+    document.getElementById("user_input").value = "";
+
+    // Send input to the server
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/get_response", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            try {
+                var response = JSON.parse(xhr.responseText);
+
+                // Ensure bot's response is passed through handleBotResponse for formatting
+                handleBotResponse({ response: response.response });
+
+                // Scroll to the bottom of the chat
+                messages.scrollTop = messages.scrollHeight;
+
+                // Refresh chat history
+                loadChatHistory();
+            } catch (error) {
+                console.error("Error parsing response:", error);
+            }
+        }
+    };
+    xhr.send("user_input=" + encodeURIComponent(user_input));
+}
+
+        function formatMessage(message) {
+            // Trim any leading or trailing spaces or line breaks
+            message = message.trim();
+
+            // Convert newlines to <br> for paragraph breaks
+            message = message.replace(/\n+/g, "<br>"); // Multiple newlines reduced to single <br>
+
+            // Convert **text** or __text__ to <strong>text</strong> (for bold)
+            message = message.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+            message = message.replace(/__(.*?)__/g, "<strong>$1</strong>");
+
+            // Convert *text* or _text_ to <em>text</em> (for italic)
+            message = message.replace(/\*(.*?)\*/g, "<em>$1</em>");
+            message = message.replace(/_(.*?)_/g, "<em>$1</em>");
+
+            // Convert numbered lists (e.g., "1. Rose") into <li> elements
+            message = message.replace(/(\d+)\.\s+(.*?)(?=<br>|$)/g, "<li>$2</li>");
+            message = "<ol>" + message + "</ol>";  // Wrap in <ol> for ordered lists
+
+            // Convert URLs into clickable links
+            message = message.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
+
+            // Return the fully formatted message
+            return message;
+        }
+
+        function handleBotResponse(response) {
+            var botMessage = document.createElement("div");
+            botMessage.className = "message bot-message";
+
+            // Check if the message is already formatted (HTML) or needs formatting
+            if (response.response.includes("<") && response.response.includes(">")) {
+                botMessage.innerHTML = response.response.trim(); // Inject as is if it's preformatted
+            } else {
+                botMessage.innerHTML = formatMessage(response.response.trim()); // Format if it's plain text
+            }
+
+            var messages = document.getElementById("messages");
+            messages.appendChild(botMessage);
+        }
+
+        // Example chatbot logic to process user input
+        function chatbot_response(user_input) {
+            // Your intent-matching or dynamic response generation logic
+
+            let responseText = "";  // Store the chatbot's response here
+
+            // If the user asks about weather
+            if (user_input.includes("weather")) {
+                responseText = "Which city would you like the weather for?";
+            } else if (user_input.includes("joke")) {
+                responseText = "Why don't scientists trust atoms? Because they make up everything!";
+            } else {
+                // Fallback to Gemini or other APIs if no intents are matched
+                responseText = gemini_fallback(user_input);
+            }
+
+            // Pass the response to handleBotResponse for formatting and display
+            handleBotResponse({ response: responseText });
+        }
+        function gemini_fallback(user_input) {
+            // Call to Gemini API or other fallback mechanisms
+            let fallbackResponse = "Fallback response from Gemini API";
+
+            // Ensure fallback response is passed through handleBotResponse for formatting
+            handleBotResponse({ response: fallbackResponse });
+        }
+
+        // Log out the user
+        function logout() {
+            window.location.href = '/logout';  // Redirect to logout route
+        }
+    </script>
+</body>
+
+</html>

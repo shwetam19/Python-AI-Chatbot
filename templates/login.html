@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Pluto.ai</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000033; /* Dark blue background */
+            color: #F0F0F0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle 5s infinite;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .meteor {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: #fff;
+            opacity: 0;
+            transform: rotate(-45deg);
+            animation: meteor 5s linear infinite;
+        }
+
+        @keyframes meteor {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) rotate(-45deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-100vw, 100vh) rotate(-45deg);
+            }
+        }
+
+        .login-wrapper {
+            background-color: rgba(30, 40, 50, 0.8);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid #4a5c6b;
+            position: relative;
+            z-index: 1;
+        }
+
+        .robot-icon {
+            margin-bottom: 20px;
+        }
+
+        .pluto-icon {
+            width: 80px;
+            height: 80px;
+        }
+
+        h2 {
+            color: beige;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            text-align: left;
+            margin-bottom: 5px;
+            color: #b0c4de;
+        }
+
+        input {
+            padding: 10px;
+            border-radius: 20px;
+            border: none;
+            background-color: rgba(176, 196, 222, 0.2);
+            color: #fff;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 30px;
+            background-color: #8b3a3a;
+            color: #F0F0F0;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #6b2d2d;
+        }
+
+        p {
+            margin-top: 20px;
+            color: white;
+        }
+
+        a {
+            color: #9FCBEB;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="login-wrapper">
+        <div class="robot-icon">
+            <svg class="pluto-icon" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="100" cy="100" r="90" fill="#C4A484"/>
+                <circle cx="70" cy="70" r="30" fill="#E6CCAB"/>
+                <circle cx="140" cy="120" r="25" fill="#E6CCAB"/>
+                <path d="M110,75 Q125,60 140,75 T170,75 Q185,90 170,105 L140,135 L110,105 Q95,90 110,75 Z" fill="#8B4513"/>
+                <circle cx="50" cy="150" r="8" fill="#8B4513"/>
+                <circle cx="160" cy="60" r="6" fill="#683f22"/>
+                <circle cx="30" cy="100" r="5" fill="#683f22"/>
+            </svg>
+        </div>
+
+        <h2>Login</h2>
+        <form method="POST" action="{{ url_for('login') }}">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="{{ url_for('register') }}">Register here</a></p>
+    </div>
+
+    <script>
+        // Create stars
+        const starsContainer = document.querySelector('.stars');
+        const starCount = 200;
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.animationDelay = `${Math.random() * 5}s`;
+            starsContainer.appendChild(star);
+        }
+
+        // Create meteors
+        function createMeteor() {
+            const meteor = document.createElement('div');
+            meteor.classList.add('meteor');
+            meteor.style.left = `${Math.random() * 100}vw`;
+            meteor.style.top = `${Math.random() * 100}vh`;
+            document.body.appendChild(meteor);
+
+            setTimeout(() => {
+                meteor.remove();
+            }, 5000);
+        }
+
+        // Create meteors periodically
+        setInterval(createMeteor, 2000);
+    </script>
+</body>
+</html>
